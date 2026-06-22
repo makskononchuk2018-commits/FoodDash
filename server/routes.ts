@@ -1635,7 +1635,16 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
   // Register admin order routes
   registerAdminOrderRoutes(app);
 
-  await seedData();
+  if (process.env.SEED_DEV_DATA === "true") {
+    try {
+      await seedData();
+    } catch (error) {
+      console.warn(
+        "⚠️ Не удалось выполнить dev seedData. Сервер продолжит запуск, но API, требующие PostgreSQL, могут возвращать ошибки.",
+        error,
+      );
+    }
+  }
 
   return httpServer;
 }

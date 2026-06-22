@@ -1,5 +1,5 @@
 ﻿import "dotenv/config";
-import express, { type Request, Response, NextFunction } from "express";
+import express, { type Express, type Request, Response, NextFunction } from "express";
 import path from "path";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
@@ -14,6 +14,8 @@ declare module "http" {
     rawBody: unknown;
   }
 }
+
+wrapAsyncRouteHandlers();
 
 app.use(createSessionMiddleware());
 app.use(hydrateSessionUser);
@@ -30,6 +32,41 @@ app.use(express.urlencoded({ extended: false }));
 
 // Serve uploaded images
 app.use("/uploads", express.static(path.resolve(process.cwd(), "uploads")));
+
+function wrapAsyncRouteHandlers() {
+  const methods = ["get", "post", "put", "patch", "delete"] as const;
+
+  for (const method of methods) {
+    const original = app[method].bind(app) as (...args: any[]) => Express;
+
+    (app as any)[method] = (...args: any[]) =>
+      original(
+        ...args.map((handler) => {
+          if (typeof handler !== "function" || handler.length > 3) {
+            return handler;
+          }
+
+          return function asyncRouteHandler(
+            req: Request,
+            res: Response,
+            next: NextFunction,
+          ) {
+            try {
+              const result = handler(req, res, next);
+
+              if (result && typeof result.then === "function") {
+                return result.catch(next);
+              }
+
+              return result;
+            } catch (error) {
+              return next(error);
+            }
+          };
+        }),
+      );
+  }
+}
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {

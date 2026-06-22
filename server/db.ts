@@ -14,7 +14,7 @@ export const databaseConfigError = databaseUrl
       "DATABASE_URL must be set in .env. Did you forget to provision a database?",
     );
 
-function shouldTrustSelfSignedCertificate(connectionString: string) {
+function shouldUseNoVerifySslMode(connectionString: string) {
   const parsedDatabaseUrl = new URL(connectionString);
   const sslMode = parsedDatabaseUrl.searchParams.get("sslmode");
   const sslRejectUnauthorized = process.env.DATABASE_SSL_REJECT_UNAUTHORIZED;
@@ -26,29 +26,28 @@ function shouldTrustSelfSignedCertificate(connectionString: string) {
   return process.env.NODE_ENV !== "production" && sslMode === "require";
 }
 
-const poolConfig: PoolConfig = {};
-
-if (databaseUrl) {
-  poolConfig.connectionString = databaseUrl;
-
-  if (shouldTrustSelfSignedCertificate(databaseUrl)) {
-    poolConfig.ssl = { rejectUnauthorized: false };
-  }
+function setNoVerifySslMode(connectionString: string) {
+  const parsedDatabaseUrl = new URL(connectionString);
+  parsedDatabaseUrl.searchParams.set("sslmode", "no-verify");
+  return parsedDatabaseUrl.toString();
 }
+
+function createPoolConfig(connectionString?: string): PoolConfig {
+  if (!connectionString) {
+    return {};
+  }
+
+  return {
+    connectionString: shouldUseNoVerifySslMode(connectionString)
+      ? setNoVerifySslMode(connectionString)
+      : connectionString,
+  };
+}
+
+const poolConfig = createPoolConfig(databaseUrl);
 
 // Создаём пул соединений к PostgreSQL
 export const pool = new Pool(poolConfig);
-
-if (!databaseConfigError) {
-  // Проверка соединения сразу при старте
-  pool
-    .query("SELECT 1")
-    .then(() => console.log("✅ Connected to PostgreSQL"))
-    .catch((err) => {
-      console.error("❌ PostgreSQL connection error:", err);
-      process.exit(1); // прекращаем работу приложения, если не удалось подключиться
-    });
-}
 
 // Создаём объект Drizzle ORM
 export const db = drizzle(pool, { schema });
