@@ -1,0 +1,217 @@
+Project fooddash_web_shop {
+  database_type: "PostgreSQL"
+  Note: "DBML for FoodDash Web-Shop. Source of truth: shared/schema.ts and database/schema.sql."
+}
+
+Enum user_role {
+  customer
+  admin
+  courier
+}
+
+Enum order_status {
+  new
+  delivery
+  completed
+  cancelled
+  returning
+}
+
+Enum order_channel {
+  website
+  wildberries
+  ozon
+  yandex
+}
+
+Enum order_event_actor_role {
+  customer
+  admin
+  courier
+  system
+}
+
+Table users {
+  id int [pk, increment]
+  username text [not null, unique]
+  password text [not null]
+  role user_role [not null, default: 'customer']
+  full_name text [not null]
+  email text
+  phone text
+  is_deleted boolean [not null, default: false]
+  deleted_at timestamp
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    role [name: "idx_users_role"]
+    is_deleted [name: "idx_users_deleted"]
+  }
+
+  Note: "Checks in SQL: role value is constrained by app enum."
+}
+
+Table products {
+  id int [pk, increment]
+  name text [not null]
+  description text
+  price decimal(12,2) [not null]
+  stock int [not null, default: 0]
+  category text [not null]
+  image_url text [not null]
+  marketplace_status jsonb [not null, default: "'{}'::jsonb"]
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    category [name: "idx_products_category"]
+  }
+
+  Note: "Checks in SQL: price >= 0, stock >= 0."
+}
+
+Table orders {
+  id int [pk, increment]
+  customer_id int [not null]
+  courier_id int
+  customer_name text [not null]
+  customer_phone text [not null]
+  customer_address text [not null]
+  total_amount decimal(12,2) [not null]
+  status order_status [not null, default: 'new']
+  channel order_channel [not null, default: 'website']
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    customer_id [name: "idx_orders_customer_id"]
+    courier_id [name: "idx_orders_courier_id"]
+    status [name: "idx_orders_status"]
+    created_at [name: "idx_orders_created_at"]
+    channel [name: "idx_orders_channel"]
+  }
+
+  Note: "Check in SQL: total_amount >= 0."
+}
+
+Table order_items {
+  id int [pk, increment]
+  order_id int [not null]
+  product_id int [not null]
+  quantity int [not null]
+  price decimal(12,2) [not null]
+  created_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    order_id [name: "idx_order_items_order_id"]
+    product_id [name: "idx_order_items_product_id"]
+  }
+
+  Note: "Checks in SQL: quantity > 0, price >= 0."
+}
+
+Table order_events {
+  id int [pk, increment]
+  order_id int [not null]
+  actor_id int
+  actor_role order_event_actor_role [not null, default: 'system']
+  event_type text [not null]
+  event_message text [not null]
+  metadata jsonb [not null, default: "'{}'::jsonb"]
+  created_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    order_id [name: "idx_order_events_order_id"]
+    created_at [name: "idx_order_events_created_at"]
+    event_type [name: "idx_order_events_type"]
+  }
+}
+
+Table courier_schedule {
+  id int [pk, increment]
+  courier_id int [not null]
+  day_of_week text [not null]
+  time_slots text[] [not null, default: "'{}'"]
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    courier_id [name: "idx_courier_schedule_courier_id"]
+    (courier_id, day_of_week) [unique, name: "uq_courier_schedule_day"]
+  }
+}
+
+Table shopping_carts {
+  id int [pk, increment]
+  customer_id int [not null]
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    customer_id [name: "idx_shopping_carts_customer_id"]
+  }
+}
+
+Table cart_items {
+  id int [pk, increment]
+  cart_id int [not null]
+  product_id int [not null]
+  quantity int [not null, default: 1]
+  created_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    cart_id [name: "idx_cart_items_cart_id"]
+  }
+
+  Note: "Check in SQL: quantity > 0."
+}
+
+Table saved_addresses {
+  id int [pk, increment]
+  customer_id int [not null]
+  address text [not null]
+  is_default boolean [not null, default: false]
+  created_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    customer_id [name: "idx_saved_addresses_customer_id"]
+    (customer_id, address) [unique, name: "uq_saved_addresses_customer_address"]
+  }
+}
+
+Table manager_contacts {
+  id int [pk, increment]
+  label text [not null]
+  telegram_url text [not null]
+  telegram_username text
+  is_active boolean [not null, default: true]
+  updated_by int
+  created_at timestamp [not null, default: `now()`]
+  updated_at timestamp [not null, default: `now()`]
+
+  Indexes {
+    is_active [name: "idx_manager_contacts_active"]
+  }
+
+  Note: "DB default for label is Russian text in SQL schema."
+}
+
+Ref: orders.customer_id > users.id [delete: restrict]
+Ref: orders.courier_id > users.id [delete: set null]
+
+Ref: order_items.order_id > orders.id [delete: cascade]
+Ref: order_items.product_id > products.id [delete: restrict]
+
+Ref: order_events.order_id > orders.id [delete: cascade]
+Ref: order_events.actor_id > users.id [delete: set null]
+
+Ref: courier_schedule.courier_id > users.id [delete: cascade]
+
+Ref: shopping_carts.customer_id > users.id [delete: cascade]
+Ref: cart_items.cart_id > shopping_carts.id [delete: cascade]
+Ref: cart_items.product_id > products.id [delete: restrict]
+
+Ref: saved_addresses.customer_id > users.id [delete: cascade]
+
+Ref: manager_contacts.updated_by > users.id [delete: set null]

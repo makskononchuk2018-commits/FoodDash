@@ -1,0 +1,167 @@
+@startuml
+title Диаграмма вариантов использования FoodDash Web-Shop
+
+left to right direction
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam rectangle {
+  BorderColor #475569
+  BackgroundColor #F8FAFC
+}
+skinparam usecase {
+  BorderColor #2563EB
+  BackgroundColor #EFF6FF
+  ArrowColor #334155
+}
+skinparam actor {
+  BorderColor #0F172A
+  BackgroundColor #FFFFFF
+}
+
+actor "Гость" as Guest
+actor "Покупатель" as Customer
+actor "Курьер" as Courier
+actor "Администратор" as Admin
+actor "Маркетплейсы\nWildberries/Ozon/Yandex" as Marketplaces
+actor "Сервис карт\nи геолокации" as GeoService
+actor "Мессенджер\nMAX/Telegram" as Messenger
+
+rectangle "Информационная система FoodDash Web-Shop" {
+  package "Публичная часть" {
+    usecase "Просматривать\nкаталог" as UC_BrowseCatalog
+    usecase "Фильтровать и искать\nтовары" as UC_SearchProducts
+    usecase "Получать подсказки\nИИ-помощника" as UC_Chat
+    usecase "Зарегистрироваться" as UC_Register
+    usecase "Войти/выйти\nиз системы" as UC_Login
+    usecase "Подать заявку\nна роль курьера" as UC_CourierApply
+  }
+
+  package "Личный кабинет покупателя" {
+    usecase "Сформировать\nкорзину" as UC_Cart
+    usecase "Оформить заказ" as UC_Checkout
+    usecase "Выбрать способ\nоплаты" as UC_Payment
+    usecase "Применить\nпромокод" as UC_Promo
+    usecase "Списать и получить\nбонусы" as UC_Bonuses
+    usecase "Просмотреть историю\nи состав заказов" as UC_OrderHistory
+    usecase "Повторить заказ" as UC_RepeatOrder
+    usecase "Отменить заказ" as UC_CancelOrder
+    usecase "Отследить доставку\nна карте" as UC_TrackOrder
+    usecase "Связаться\nс менеджером" as UC_CustomerContact
+  }
+
+  package "Панель курьера" {
+    usecase "Просмотреть доступные\nзаказы" as UC_AvailableOrders
+    usecase "Взять заказ\nв доставку" as UC_AcceptDelivery
+    usecase "Вести активные\nдоставки" as UC_ManageDeliveries
+    usecase "Изменить очередность\nдоставок" as UC_DeliverySequence
+    usecase "Обновить статус\nдоставки" as UC_DeliveryStatus
+    usecase "Удалить товар\nпри доставке" as UC_CourierRemoveItem
+    usecase "Отменить доставку\nс причиной" as UC_CourierCancel
+    usecase "Передавать GPS\nкоординаты" as UC_SendLocation
+    usecase "Заполнить график\nдоступности" as UC_CourierSchedule
+    usecase "Просмотреть личную\nстатистику" as UC_CourierStats
+    usecase "Связаться\nс менеджером" as UC_CourierContact
+  }
+
+  package "Административная панель" {
+    usecase "Управлять\nпользователями" as UC_ManageUsers
+    usecase "Рассматривать заявки\nкурьеров" as UC_ReviewCourierApps
+    usecase "Управлять товарами\nи остатками" as UC_ManageProducts
+    usecase "Загрузить изображение\nтовара" as UC_UploadImage
+    usecase "Синхронизировать\nтовары с маркетплейсами" as UC_SyncMarketplaces
+    usecase "Управлять заказами" as UC_ManageOrders
+    usecase "Назначить или снять\nкурьера" as UC_AssignCourier
+    usecase "Изменить статус\nзаказа" as UC_UpdateOrderStatus
+    usecase "Редактировать состав\nзаказа" as UC_EditOrderItems
+    usecase "Просмотреть отмены\nи возвраты" as UC_Cancellations
+    usecase "Контролировать график\nкурьеров" as UC_AdminSchedule
+    usecase "Настроить контакт\nменеджера" as UC_ManagerContact
+    usecase "Просмотреть аналитику\nи дашборд" as UC_Analytics
+    usecase "Экспортировать отчет\nв Excel" as UC_ExportReport
+  }
+}
+
+Guest -- UC_BrowseCatalog
+Guest -- UC_SearchProducts
+Guest -- UC_Chat
+Guest -- UC_Register
+Guest -- UC_Login
+Guest -- UC_CourierApply
+
+Customer -- UC_Login
+Customer -- UC_BrowseCatalog
+Customer -- UC_Cart
+Customer -- UC_Checkout
+Customer -- UC_OrderHistory
+Customer -- UC_RepeatOrder
+Customer -- UC_CancelOrder
+Customer -- UC_TrackOrder
+Customer -- UC_CustomerContact
+
+Courier -- UC_Login
+Courier -- UC_AvailableOrders
+Courier -- UC_AcceptDelivery
+Courier -- UC_ManageDeliveries
+Courier -- UC_CourierSchedule
+Courier -- UC_CourierStats
+Courier -- UC_CourierContact
+
+Admin -- UC_Login
+Admin -- UC_ManageUsers
+Admin -- UC_ReviewCourierApps
+Admin -- UC_ManageProducts
+Admin -- UC_ManageOrders
+Admin -- UC_AdminSchedule
+Admin -- UC_ManagerContact
+Admin -- UC_Analytics
+Admin -- UC_ExportReport
+
+UC_BrowseCatalog ..> UC_SearchProducts : <<include>>
+UC_Checkout ..> UC_Cart : <<include>>
+UC_Checkout ..> UC_Payment : <<include>>
+UC_Checkout ..> UC_Promo : <<extend>>
+UC_Checkout ..> UC_Bonuses : <<extend>>
+UC_OrderHistory ..> UC_TrackOrder : <<extend>>
+UC_OrderHistory ..> UC_RepeatOrder : <<extend>>
+UC_OrderHistory ..> UC_CancelOrder : <<extend>>
+
+UC_AcceptDelivery ..> UC_SendLocation : <<include>>
+UC_ManageDeliveries ..> UC_DeliverySequence : <<extend>>
+UC_ManageDeliveries ..> UC_DeliveryStatus : <<include>>
+UC_ManageDeliveries ..> UC_CourierRemoveItem : <<extend>>
+UC_ManageDeliveries ..> UC_CourierCancel : <<extend>>
+UC_ManageDeliveries ..> UC_SendLocation : <<include>>
+
+UC_ReviewCourierApps ..> UC_ManageUsers : <<include>>
+UC_ManageProducts ..> UC_UploadImage : <<include>>
+UC_ManageProducts ..> UC_SyncMarketplaces : <<extend>>
+UC_ManageOrders ..> UC_AssignCourier : <<include>>
+UC_ManageOrders ..> UC_UpdateOrderStatus : <<include>>
+UC_ManageOrders ..> UC_EditOrderItems : <<extend>>
+UC_ManageOrders ..> UC_Cancellations : <<extend>>
+UC_Analytics ..> UC_ExportReport : <<extend>>
+
+Marketplaces -- UC_SyncMarketplaces
+GeoService -- UC_TrackOrder
+GeoService -- UC_SendLocation
+GeoService -- UC_ManageDeliveries
+Messenger -- UC_CustomerContact
+Messenger -- UC_CourierContact
+Messenger -- UC_ManagerContact
+
+note right of UC_Checkout
+  Заказ доступен только
+  авторизованному покупателю.
+end note
+
+note right of UC_AcceptDelivery
+  Курьер может иметь
+  не более 3 активных доставок.
+end note
+
+note right of UC_ManageOrders
+  Администратор управляет
+  статусами, составом и курьерами.
+end note
+@enduml

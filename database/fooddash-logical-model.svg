@@ -1,0 +1,203 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="980" viewBox="0 0 1300 980">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .table { fill: #ffffff; stroke: #111827; stroke-width: 1.4; }
+      .header { fill: #111827; }
+      .title { fill: #ffffff; font: 700 14px 'Segoe UI', Arial, sans-serif; }
+      .field { fill: #111827; font: 12px 'Consolas', 'Courier New', monospace; }
+      .pk { fill: #065f46; font: 700 12px 'Consolas', 'Courier New', monospace; }
+      .fk { fill: #1d4ed8; font: 700 12px 'Consolas', 'Courier New', monospace; }
+      .caption { fill: #0f172a; font: 700 22px 'Segoe UI', Arial, sans-serif; }
+      .subcaption { fill: #475569; font: 13px 'Segoe UI', Arial, sans-serif; }
+      .rel { fill: none; stroke: #2563eb; stroke-width: 2; marker-end: url(#arrow); }
+      .rel-label { fill: #1e3a8a; font: 11px 'Segoe UI', Arial, sans-serif; }
+      .legend-title { fill: #111827; font: 700 12px 'Segoe UI', Arial, sans-serif; }
+      .legend-text { fill: #334155; font: 12px 'Segoe UI', Arial, sans-serif; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1300" height="980" />
+  <text class="caption" x="40" y="38">FoodDash - Logical Database Model (ER)</text>
+  <text class="subcaption" x="40" y="60">Arrow direction: FK table -&gt; referenced PK table</text>
+
+  <!-- users -->
+  <g transform="translate(40,70)">
+    <rect class="table" width="330" height="250" rx="12" />
+    <rect class="header" width="330" height="36" rx="12" />
+    <text class="title" x="14" y="23">users</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="field" x="14" y="76">username</text>
+    <text class="field" x="14" y="94">password</text>
+    <text class="field" x="14" y="112">role</text>
+    <text class="field" x="14" y="130">full_name</text>
+    <text class="field" x="14" y="148">email, phone</text>
+    <text class="field" x="14" y="166">is_deleted, deleted_at</text>
+    <text class="field" x="14" y="184">created_at, updated_at</text>
+  </g>
+
+  <!-- orders -->
+  <g transform="translate(430,70)">
+    <rect class="table" width="360" height="270" rx="12" />
+    <rect class="header" width="360" height="36" rx="12" />
+    <text class="title" x="14" y="23">orders</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="fk" x="14" y="76">FK customer_id -&gt; users.id</text>
+    <text class="fk" x="14" y="94">FK courier_id -&gt; users.id (nullable)</text>
+    <text class="field" x="14" y="112">customer_name, customer_phone</text>
+    <text class="field" x="14" y="130">customer_address</text>
+    <text class="field" x="14" y="148">total_amount</text>
+    <text class="field" x="14" y="166">status</text>
+    <text class="field" x="14" y="184">channel</text>
+    <text class="field" x="14" y="202">created_at, updated_at</text>
+  </g>
+
+  <!-- products -->
+  <g transform="translate(860,70)">
+    <rect class="table" width="340" height="230" rx="12" />
+    <rect class="header" width="340" height="36" rx="12" />
+    <text class="title" x="14" y="23">products</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="field" x="14" y="76">name, description</text>
+    <text class="field" x="14" y="94">price, stock</text>
+    <text class="field" x="14" y="112">category, image_url</text>
+    <text class="field" x="14" y="130">marketplace_status (jsonb)</text>
+    <text class="field" x="14" y="148">created_at, updated_at</text>
+  </g>
+
+  <!-- order_items -->
+  <g transform="translate(860,350)">
+    <rect class="table" width="340" height="190" rx="12" />
+    <rect class="header" width="340" height="36" rx="12" />
+    <text class="title" x="14" y="23">order_items</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="fk" x="14" y="76">FK order_id -&gt; orders.id</text>
+    <text class="fk" x="14" y="94">FK product_id -&gt; products.id</text>
+    <text class="field" x="14" y="112">quantity, price</text>
+    <text class="field" x="14" y="130">created_at</text>
+  </g>
+
+  <!-- order_events -->
+  <g transform="translate(430,410)">
+    <rect class="table" width="360" height="220" rx="12" />
+    <rect class="header" width="360" height="36" rx="12" />
+    <text class="title" x="14" y="23">order_events</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="fk" x="14" y="76">FK order_id -&gt; orders.id</text>
+    <text class="fk" x="14" y="94">FK actor_id -&gt; users.id (nullable)</text>
+    <text class="field" x="14" y="112">actor_role</text>
+    <text class="field" x="14" y="130">event_type, event_message</text>
+    <text class="field" x="14" y="148">metadata (jsonb)</text>
+    <text class="field" x="14" y="166">created_at</text>
+  </g>
+
+  <!-- shopping_carts -->
+  <g transform="translate(40,380)">
+    <rect class="table" width="330" height="130" rx="12" />
+    <rect class="header" width="330" height="36" rx="12" />
+    <text class="title" x="14" y="23">shopping_carts</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="fk" x="14" y="76">FK customer_id -&gt; users.id</text>
+    <text class="field" x="14" y="94">created_at, updated_at</text>
+  </g>
+
+  <!-- saved_addresses -->
+  <g transform="translate(40,540)">
+    <rect class="table" width="330" height="150" rx="12" />
+    <rect class="header" width="330" height="36" rx="12" />
+    <text class="title" x="14" y="23">saved_addresses</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="fk" x="14" y="76">FK customer_id -&gt; users.id</text>
+    <text class="field" x="14" y="94">address, is_default</text>
+    <text class="field" x="14" y="112">created_at</text>
+  </g>
+
+  <!-- courier_schedule -->
+  <g transform="translate(40,720)">
+    <rect class="table" width="330" height="170" rx="12" />
+    <rect class="header" width="330" height="36" rx="12" />
+    <text class="title" x="14" y="23">courier_schedule</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="fk" x="14" y="76">FK courier_id -&gt; users.id</text>
+    <text class="field" x="14" y="94">day_of_week</text>
+    <text class="field" x="14" y="112">time_slots[]</text>
+    <text class="field" x="14" y="130">created_at, updated_at</text>
+  </g>
+
+  <!-- manager_contacts -->
+  <g transform="translate(430,720)">
+    <rect class="table" width="360" height="190" rx="12" />
+    <rect class="header" width="360" height="36" rx="12" />
+    <text class="title" x="14" y="23">manager_contacts</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="fk" x="14" y="76">FK updated_by -&gt; users.id (nullable)</text>
+    <text class="field" x="14" y="94">label</text>
+    <text class="field" x="14" y="112">telegram_url, telegram_username</text>
+    <text class="field" x="14" y="130">is_active</text>
+    <text class="field" x="14" y="148">created_at, updated_at</text>
+  </g>
+
+  <!-- cart_items -->
+  <g transform="translate(860,590)">
+    <rect class="table" width="340" height="170" rx="12" />
+    <rect class="header" width="340" height="36" rx="12" />
+    <text class="title" x="14" y="23">cart_items</text>
+    <text class="pk" x="14" y="58">PK id</text>
+    <text class="fk" x="14" y="76">FK cart_id -&gt; shopping_carts.id</text>
+    <text class="fk" x="14" y="94">FK product_id -&gt; products.id</text>
+    <text class="field" x="14" y="112">quantity</text>
+    <text class="field" x="14" y="130">created_at</text>
+  </g>
+
+  <!-- Relationships -->
+  <path class="rel" d="M430 150 L395 150 L395 145 L370 145" />
+  <text class="rel-label" x="394" y="134">orders.customer_id (N:1)</text>
+
+  <path class="rel" d="M430 205 L395 205 L395 185 L370 185" />
+  <text class="rel-label" x="394" y="220">orders.courier_id (N:1)</text>
+
+  <path class="rel" d="M860 410 L825 410 L825 240 L790 240" />
+  <text class="rel-label" x="830" y="325">order_items.order_id (N:1)</text>
+
+  <path class="rel" d="M1030 350 L1030 300" />
+  <text class="rel-label" x="1040" y="330">order_items.product_id (N:1)</text>
+
+  <path class="rel" d="M610 410 L610 340" />
+  <text class="rel-label" x="620" y="378">order_events.order_id (N:1)</text>
+
+  <path class="rel" d="M430 505 L400 505 L400 225 L370 225" />
+  <text class="rel-label" x="405" y="362">order_events.actor_id (N:1)</text>
+
+  <path class="rel" d="M205 380 L205 320" />
+  <text class="rel-label" x="214" y="352">shopping_carts.customer_id (N:1)</text>
+
+  <path class="rel" d="M860 675 L700 675 L700 445 L370 445" />
+  <text class="rel-label" x="708" y="560">cart_items.cart_id (N:1)</text>
+
+  <path class="rel" d="M1030 590 L1030 300" />
+  <text class="rel-label" x="1040" y="462">cart_items.product_id (N:1)</text>
+
+  <path class="rel" d="M205 540 L205 490 L245 490 L245 320" />
+  <text class="rel-label" x="214" y="510">saved_addresses.customer_id (N:1)</text>
+
+  <path class="rel" d="M205 720 L205 640 L285 640 L285 320" />
+  <text class="rel-label" x="214" y="676">courier_schedule.courier_id (N:1)</text>
+
+  <path class="rel" d="M430 815 L400 815 L400 265 L370 265" />
+  <text class="rel-label" x="406" y="546">manager_contacts.updated_by (N:1)</text>
+
+  <!-- Legend -->
+  <g transform="translate(860,790)">
+    <rect x="0" y="0" width="340" height="120" rx="12" fill="#ffffff" stroke="#111827" stroke-width="1.2" />
+    <text class="legend-title" x="14" y="24">Legend</text>
+    <text class="pk" x="14" y="46">PK</text>
+    <text class="legend-text" x="44" y="46">Primary key attribute</text>
+    <text class="fk" x="14" y="66">FK</text>
+    <text class="legend-text" x="44" y="66">Foreign key attribute</text>
+    <path class="rel" d="M14 92 L80 92" />
+    <text class="legend-text" x="90" y="96">FK points to referenced PK table</text>
+  </g>
+</svg>

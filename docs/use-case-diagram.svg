@@ -1,0 +1,261 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1300" viewBox="0 0 1800 1300" role="img" aria-labelledby="title desc">
+  <title id="title">Диаграмма вариантов использования FoodDash Web-Shop</title>
+  <desc id="desc">Use case diagram for an online food shop and delivery system with guest, customer, courier, administrator and external system actors.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
+    </marker>
+    <style>
+      .page { fill: #ffffff; }
+      .title { font: 700 34px "Segoe UI", Arial, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .subtitle { font: 400 16px "Segoe UI", Arial, sans-serif; fill: #475569; text-anchor: middle; }
+      .system { fill: #f8fafc; stroke: #334155; stroke-width: 2.5; rx: 18; }
+      .system-title { font: 700 22px "Segoe UI", Arial, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .package { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.8; rx: 14; }
+      .package-title { font: 700 18px "Segoe UI", Arial, sans-serif; fill: #1e293b; }
+      .usecase { fill: #eff6ff; stroke: #2563eb; stroke-width: 2; }
+      .usecase.admin { fill: #f0fdf4; stroke: #16a34a; }
+      .usecase.courier { fill: #fff7ed; stroke: #ea580c; }
+      .usecase.customer { fill: #f5f3ff; stroke: #7c3aed; }
+      .uc-text { font: 600 15px "Segoe UI", Arial, sans-serif; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; }
+      .small { font-size: 14px; }
+      .actor-stroke { fill: none; stroke: #0f172a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .actor-label { font: 700 17px "Segoe UI", Arial, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .actor-note { font: 400 13px "Segoe UI", Arial, sans-serif; fill: #475569; text-anchor: middle; }
+      .assoc { stroke: #64748b; stroke-width: 2; fill: none; }
+      .include { stroke: #475569; stroke-width: 2; fill: none; stroke-dasharray: 8 6; marker-end: url(#arrow); }
+      .external { stroke: #0f766e; stroke-width: 2.2; fill: none; stroke-dasharray: 5 5; }
+      .label { font: 600 13px "Segoe UI", Arial, sans-serif; fill: #475569; text-anchor: middle; }
+      .legend { font: 400 13px "Segoe UI", Arial, sans-serif; fill: #475569; }
+    </style>
+  </defs>
+
+  <rect class="page" width="1800" height="1300" />
+  <text x="900" y="42" class="title">Диаграмма вариантов использования FoodDash Web-Shop</text>
+  <text x="900" y="70" class="subtitle">Интернет-магазин еды с доставкой, курьерской панелью и административным управлением</text>
+
+  <rect x="250" y="95" width="1300" height="1130" class="system" />
+  <text x="900" y="128" class="system-title">Информационная система FoodDash Web-Shop</text>
+
+  <rect x="300" y="155" width="520" height="235" class="package" />
+  <text x="324" y="184" class="package-title">Публичная часть</text>
+
+  <rect x="300" y="430" width="520" height="350" class="package" />
+  <text x="324" y="459" class="package-title">Личный кабинет покупателя</text>
+
+  <rect x="300" y="820" width="520" height="360" class="package" />
+  <text x="324" y="849" class="package-title">Панель курьера</text>
+
+  <rect x="900" y="155" width="570" height="625" class="package" />
+  <text x="924" y="184" class="package-title">Административная панель</text>
+
+  <rect x="900" y="820" width="570" height="360" class="package" />
+  <text x="924" y="849" class="package-title">Внешние интеграции и данные</text>
+  <text x="930" y="880" class="legend">Пунктиром показаны связи с внешними сервисами и вспомогательные зависимости.</text>
+
+  <!-- Actor associations -->
+  <path class="assoc" d="M 136 180 C 220 180, 280 205, 320 225" />
+  <path class="assoc" d="M 136 180 C 230 175, 300 175, 330 225" />
+  <path class="assoc" d="M 136 180 C 230 230, 300 275, 330 302" />
+  <path class="assoc" d="M 136 180 C 245 250, 330 340, 430 340" />
+
+  <path class="assoc" d="M 136 595 C 220 570, 270 520, 318 515" />
+  <path class="assoc" d="M 136 595 C 230 590, 295 595, 320 596" />
+  <path class="assoc" d="M 136 595 C 230 650, 275 682, 320 684" />
+  <path class="assoc" d="M 136 595 C 240 630, 320 735, 440 735" />
+
+  <path class="assoc" d="M 136 1000 C 225 935, 280 905, 320 905" />
+  <path class="assoc" d="M 136 1000 C 230 980, 280 985, 320 990" />
+  <path class="assoc" d="M 136 1000 C 230 1050, 280 1075, 320 1075" />
+  <path class="assoc" d="M 136 1000 C 240 1110, 335 1148, 440 1148" />
+
+  <path class="assoc" d="M 1664 360 C 1585 230, 1518 180, 1450 178" />
+  <path class="assoc" d="M 1664 360 C 1585 260, 1515 262, 1450 262" />
+  <path class="assoc" d="M 1664 360 C 1585 340, 1520 348, 1450 348" />
+  <path class="assoc" d="M 1664 360 C 1590 435, 1518 432, 1450 432" />
+  <path class="assoc" d="M 1664 360 C 1590 535, 1515 520, 1450 520" />
+  <path class="assoc" d="M 1664 360 C 1590 620, 1518 608, 1450 608" />
+  <path class="assoc" d="M 1664 360 C 1600 710, 1490 700, 1330 698" />
+
+  <!-- Include and extend dependencies -->
+  <path class="include" d="M 585 515 C 550 515, 522 515, 495 515" />
+  <text x="540" y="501" class="label">include</text>
+  <path class="include" d="M 656 550 C 610 575, 560 595, 506 598" />
+  <text x="594" y="575" class="label">extend</text>
+  <path class="include" d="M 648 625 C 605 655, 560 680, 504 685" />
+  <text x="590" y="659" class="label">extend</text>
+
+  <path class="include" d="M 560 905 C 595 905, 620 905, 646 905" />
+  <text x="602" y="890" class="label">include</text>
+  <path class="include" d="M 545 990 C 585 990, 620 990, 646 990" />
+  <text x="600" y="975" class="label">include</text>
+  <path class="include" d="M 445 1028 C 445 1048, 445 1060, 445 1070" />
+  <text x="500" y="1054" class="label">extend</text>
+
+  <path class="include" d="M 1180 262 C 1215 262, 1245 262, 1275 262" />
+  <text x="1226" y="247" class="label">extend</text>
+  <path class="include" d="M 1180 348 C 1215 348, 1245 348, 1275 348" />
+  <text x="1226" y="333" class="label">include</text>
+  <path class="include" d="M 1180 180 C 1215 180, 1245 180, 1275 180" />
+  <text x="1226" y="165" class="label">include</text>
+  <path class="include" d="M 1268 610 C 1238 640, 1215 670, 1200 700" />
+  <text x="1270" y="663" class="label">extend</text>
+
+  <!-- External service links -->
+  <path class="external" d="M 1664 1000 C 1560 910, 1490 900, 1335 900" />
+  <path class="external" d="M 1664 1100 C 1565 1010, 1490 995, 1320 995" />
+  <path class="external" d="M 1664 1100 C 1450 1040, 870 1010, 726 990" />
+  <path class="external" d="M 1664 1210 C 1500 1125, 1395 1065, 1300 1065" />
+  <path class="external" d="M 1664 1210 C 1460 1165, 870 1160, 690 1148" />
+
+  <!-- Public use cases -->
+  <ellipse cx="430" cy="225" rx="112" ry="38" class="usecase" />
+  <text x="430" y="218" class="uc-text"><tspan x="430" dy="-4">Просматривать</tspan><tspan x="430" dy="18">каталог</tspan></text>
+
+  <ellipse cx="690" cy="225" rx="112" ry="38" class="usecase" />
+  <text x="690" y="218" class="uc-text"><tspan x="690" dy="-4">Фильтровать</tspan><tspan x="690" dy="18">товары</tspan></text>
+
+  <ellipse cx="430" cy="302" rx="112" ry="38" class="usecase" />
+  <text x="430" y="295" class="uc-text"><tspan x="430" dy="-4">Получать подсказки</tspan><tspan x="430" dy="18">ИИ-помощника</tspan></text>
+
+  <ellipse cx="690" cy="302" rx="112" ry="38" class="usecase" />
+  <text x="690" y="295" class="uc-text"><tspan x="690" dy="-4">Регистрация</tspan><tspan x="690" dy="18">и вход</tspan></text>
+
+  <ellipse cx="560" cy="360" rx="132" ry="30" class="usecase" />
+  <text x="560" y="360" class="uc-text small">Подать заявку курьера</text>
+
+  <!-- Customer use cases -->
+  <ellipse cx="430" cy="515" rx="112" ry="38" class="usecase customer" />
+  <text x="430" y="508" class="uc-text"><tspan x="430" dy="-4">Сформировать</tspan><tspan x="430" dy="18">корзину</tspan></text>
+
+  <ellipse cx="690" cy="515" rx="112" ry="38" class="usecase customer" />
+  <text x="690" y="508" class="uc-text"><tspan x="690" dy="-4">Оформить</tspan><tspan x="690" dy="18">заказ</tspan></text>
+
+  <ellipse cx="430" cy="600" rx="112" ry="38" class="usecase customer" />
+  <text x="430" y="593" class="uc-text"><tspan x="430" dy="-4">Промокоды</tspan><tspan x="430" dy="18">и бонусы</tspan></text>
+
+  <ellipse cx="690" cy="600" rx="112" ry="38" class="usecase customer" />
+  <text x="690" y="593" class="uc-text"><tspan x="690" dy="-4">История</tspan><tspan x="690" dy="18">заказов</tspan></text>
+
+  <ellipse cx="430" cy="685" rx="112" ry="38" class="usecase customer" />
+  <text x="430" y="678" class="uc-text"><tspan x="430" dy="-4">Повторить или</tspan><tspan x="430" dy="18">отменить заказ</tspan></text>
+
+  <ellipse cx="690" cy="685" rx="112" ry="38" class="usecase customer" />
+  <text x="690" y="678" class="uc-text"><tspan x="690" dy="-4">Отследить</tspan><tspan x="690" dy="18">доставку</tspan></text>
+
+  <ellipse cx="560" cy="735" rx="118" ry="30" class="usecase customer" />
+  <text x="560" y="735" class="uc-text small">Связаться с менеджером</text>
+
+  <!-- Courier use cases -->
+  <ellipse cx="430" cy="905" rx="112" ry="38" class="usecase courier" />
+  <text x="430" y="898" class="uc-text"><tspan x="430" dy="-4">Доступные</tspan><tspan x="430" dy="18">заказы</tspan></text>
+
+  <ellipse cx="690" cy="905" rx="112" ry="38" class="usecase courier" />
+  <text x="690" y="898" class="uc-text"><tspan x="690" dy="-4">Взять заказ</tspan><tspan x="690" dy="18">в доставку</tspan></text>
+
+  <ellipse cx="430" cy="990" rx="112" ry="38" class="usecase courier" />
+  <text x="430" y="983" class="uc-text"><tspan x="430" dy="-4">Вести активные</tspan><tspan x="430" dy="18">доставки</tspan></text>
+
+  <ellipse cx="690" cy="990" rx="112" ry="38" class="usecase courier" />
+  <text x="690" y="983" class="uc-text"><tspan x="690" dy="-4">Передавать</tspan><tspan x="690" dy="18">GPS</tspan></text>
+
+  <ellipse cx="430" cy="1075" rx="112" ry="38" class="usecase courier" />
+  <text x="430" y="1068" class="uc-text"><tspan x="430" dy="-4">График</tspan><tspan x="430" dy="18">доступности</tspan></text>
+
+  <ellipse cx="690" cy="1075" rx="112" ry="38" class="usecase courier" />
+  <text x="690" y="1068" class="uc-text"><tspan x="690" dy="-4">Статистика</tspan><tspan x="690" dy="18">курьера</tspan></text>
+
+  <ellipse cx="560" cy="1148" rx="118" ry="30" class="usecase courier" />
+  <text x="560" y="1148" class="uc-text small">Связаться с менеджером</text>
+
+  <!-- Admin use cases -->
+  <ellipse cx="1040" cy="180" rx="112" ry="38" class="usecase admin" />
+  <text x="1040" y="173" class="uc-text"><tspan x="1040" dy="-4">Управлять</tspan><tspan x="1040" dy="18">пользователями</tspan></text>
+
+  <ellipse cx="1330" cy="180" rx="112" ry="38" class="usecase admin" />
+  <text x="1330" y="173" class="uc-text"><tspan x="1330" dy="-4">Заявки</tspan><tspan x="1330" dy="18">курьеров</tspan></text>
+
+  <ellipse cx="1040" cy="262" rx="112" ry="38" class="usecase admin" />
+  <text x="1040" y="255" class="uc-text"><tspan x="1040" dy="-4">Товары</tspan><tspan x="1040" dy="18">и остатки</tspan></text>
+
+  <ellipse cx="1330" cy="262" rx="122" ry="38" class="usecase admin" />
+  <text x="1330" y="255" class="uc-text"><tspan x="1330" dy="-4">Синхронизация</tspan><tspan x="1330" dy="18">с маркетплейсами</tspan></text>
+
+  <ellipse cx="1040" cy="348" rx="112" ry="38" class="usecase admin" />
+  <text x="1040" y="341" class="uc-text"><tspan x="1040" dy="-4">Управлять</tspan><tspan x="1040" dy="18">заказами</tspan></text>
+
+  <ellipse cx="1330" cy="348" rx="122" ry="38" class="usecase admin" />
+  <text x="1330" y="341" class="uc-text"><tspan x="1330" dy="-4">Статусы, курьеры</tspan><tspan x="1330" dy="18">и состав заказа</tspan></text>
+
+  <ellipse cx="1040" cy="432" rx="112" ry="38" class="usecase admin" />
+  <text x="1040" y="425" class="uc-text"><tspan x="1040" dy="-4">Отмены</tspan><tspan x="1040" dy="18">и возвраты</tspan></text>
+
+  <ellipse cx="1330" cy="432" rx="112" ry="38" class="usecase admin" />
+  <text x="1330" y="425" class="uc-text"><tspan x="1330" dy="-4">График</tspan><tspan x="1330" dy="18">курьеров</tspan></text>
+
+  <ellipse cx="1040" cy="520" rx="112" ry="38" class="usecase admin" />
+  <text x="1040" y="513" class="uc-text"><tspan x="1040" dy="-4">Контакт</tspan><tspan x="1040" dy="18">менеджера</tspan></text>
+
+  <ellipse cx="1330" cy="520" rx="112" ry="38" class="usecase admin" />
+  <text x="1330" y="513" class="uc-text"><tspan x="1330" dy="-4">Аналитика</tspan><tspan x="1330" dy="18">и дашборд</tspan></text>
+
+  <ellipse cx="1185" cy="610" rx="118" ry="38" class="usecase admin" />
+  <text x="1185" y="603" class="uc-text"><tspan x="1185" dy="-4">Экспорт отчета</tspan><tspan x="1185" dy="18">в Excel</tspan></text>
+
+  <ellipse cx="1185" cy="702" rx="118" ry="38" class="usecase admin" />
+  <text x="1185" y="695" class="uc-text"><tspan x="1185" dy="-4">Загрузить</tspan><tspan x="1185" dy="18">изображение товара</tspan></text>
+
+  <!-- External integration focus -->
+  <ellipse cx="1165" cy="930" rx="160" ry="40" class="usecase" />
+  <text x="1165" y="923" class="uc-text"><tspan x="1165" dy="-4">Обмен карточками товара</tspan><tspan x="1165" dy="18">с маркетплейсами</tspan></text>
+
+  <ellipse cx="1165" cy="1015" rx="160" ry="40" class="usecase" />
+  <text x="1165" y="1008" class="uc-text"><tspan x="1165" dy="-4">Карта маршрута</tspan><tspan x="1165" dy="18">и GPS-позиция</tspan></text>
+
+  <ellipse cx="1165" cy="1100" rx="160" ry="40" class="usecase" />
+  <text x="1165" y="1093" class="uc-text"><tspan x="1165" dy="-4">Переход к связи</tspan><tspan x="1165" dy="18">с менеджером</tspan></text>
+
+  <!-- Actors -->
+  <g transform="translate(100 150)">
+    <circle cx="0" cy="0" r="18" class="actor-stroke" />
+    <path d="M 0 18 L 0 78 M -38 38 L 38 38 M 0 78 L -32 120 M 0 78 L 32 120" class="actor-stroke" />
+    <text x="0" y="152" class="actor-label">Гость</text>
+  </g>
+
+  <g transform="translate(100 565)">
+    <circle cx="0" cy="0" r="18" class="actor-stroke" />
+    <path d="M 0 18 L 0 78 M -38 38 L 38 38 M 0 78 L -32 120 M 0 78 L 32 120" class="actor-stroke" />
+    <text x="0" y="152" class="actor-label">Покупатель</text>
+  </g>
+
+  <g transform="translate(100 970)">
+    <circle cx="0" cy="0" r="18" class="actor-stroke" />
+    <path d="M 0 18 L 0 78 M -38 38 L 38 38 M 0 78 L -32 120 M 0 78 L 32 120" class="actor-stroke" />
+    <text x="0" y="152" class="actor-label">Курьер</text>
+  </g>
+
+  <g transform="translate(1690 330)">
+    <circle cx="0" cy="0" r="18" class="actor-stroke" />
+    <path d="M 0 18 L 0 78 M -38 38 L 38 38 M 0 78 L -32 120 M 0 78 L 32 120" class="actor-stroke" />
+    <text x="0" y="152" class="actor-label">Администратор</text>
+  </g>
+
+  <g transform="translate(1690 965)">
+    <circle cx="0" cy="0" r="18" class="actor-stroke" />
+    <path d="M 0 18 L 0 78 M -38 38 L 38 38 M 0 78 L -32 120 M 0 78 L 32 120" class="actor-stroke" />
+    <text x="0" y="152" class="actor-label">Маркетплейсы</text>
+    <text x="0" y="173" class="actor-note">WB / Ozon / Yandex</text>
+  </g>
+
+  <g transform="translate(1690 1085)">
+    <circle cx="0" cy="0" r="18" class="actor-stroke" />
+    <path d="M 0 18 L 0 78 M -38 38 L 38 38 M 0 78 L -32 120 M 0 78 L 32 120" class="actor-stroke" />
+    <text x="0" y="152" class="actor-label">Карты и GPS</text>
+  </g>
+
+  <g transform="translate(1690 1205)">
+    <circle cx="0" cy="0" r="18" class="actor-stroke" />
+    <path d="M 0 18 L 0 78 M -38 38 L 38 38 M 0 78 L -32 120 M 0 78 L 32 120" class="actor-stroke" />
+    <text x="0" y="152" class="actor-label">MAX / Telegram</text>
+  </g>
+</svg>
